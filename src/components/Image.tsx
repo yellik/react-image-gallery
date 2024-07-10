@@ -1,6 +1,6 @@
-import { getImage } from "../controllers/unsplashController";
+
 export function Image() {
-  const result = getImage();
+
 
   return (
     <>
