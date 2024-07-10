@@ -1,11 +1,12 @@
 
-export function Image() {
+export function Image({photo}) {
 
 
   return (
     <>
-      <h1>here is the image</h1>
-      <h2></h2>
+    <a href={photo.urls.raw}>
+      <img src={photo.urls.small}></img>
+      </a>
     </>
   );
 }
