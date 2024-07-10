@@ -22,9 +22,15 @@ export function SearchBar() {
 
   return (
     <>
-      <form action={search}>
-        <input type="text" name="searchInput" placeholder="Search for photos" />
-        <button type="submit"></button>
+      <form onSubmit={search}>
+        <input
+          type="text"
+          name="searchInput"
+          placeholder="Search for photos"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <button type="submit">Search</button>
       </form>
     </>
   );
