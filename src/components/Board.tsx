@@ -9,7 +9,7 @@ const likePhoto = async (photoId) => {
   const response = await fetch(`https://api.unsplash.com/photos/${photoId}/like`, {
     method: 'POST',
     headers: {
-      "Authorization": "5990YRBZafXkBNrlIIFlKu9p5SSMERGtV09WSZbS95Q",
+      "Authorization": "Client-ID 5990YRBZafXkBNrlIIFlKu9p5SSMERGtV09WSZbS95Q",
     },
   });
   if (!response.ok) {
