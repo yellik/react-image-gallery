@@ -3,7 +3,7 @@ import { Nav } from "./components/Nav";
 import { Board } from "./components/Board";
 import { Image } from "./components/Image";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { QueryFetch } from "./components/QueryFetch";
+// import { QueryFetch } from "./components/QueryFetch";
 
 const queryClient = new QueryClient();
 
@@ -12,7 +12,7 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <Nav />
-        <QueryFetch />
+        {/* <QueryFetch /> */}
         <Board />
       </QueryClientProvider>
     </>
