@@ -41,11 +41,13 @@ export function Board({ searchTerm }) {
     <>
       <h1>Board</h1>
       <SearchBar />
-      {data.map((photo) => (
-        <div key={photo.id}>
-          <Image key={photo.id} photo={photo} />
-        </div>
-      ))}
+      <div id="photosContainer">
+        {data.map((photo, index) => (
+          <div key={photo.id} className={`photo-item ${index === 9 ? 'center' : ''}`}>
+            <Image key={photo.id} photo={photo} />
+          </div>
+        ))}
+      </div>
       <button
         onClick={() => setPage((old) => Math.max(old - 1, 1))}
         disabled={page === 1 || isFetching}
