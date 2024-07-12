@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "@tanstack/react-router";
+
 export function SearchBar() {
   const [inputValue, setInputValue] = useState<string>("");
   const [previousSearches, setPreviousSearches] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem("previousSearches", JSON.stringify(previousSearches));
@@ -12,13 +15,16 @@ export function SearchBar() {
 
     const formData = new FormData(event.currentTarget);
     const query = formData.get("searchInput");
-    console.log(query);
 
     if (query) {
-      // go to localhost/search?query=${query}
+      // Navigate to /search?query=${query}
+      navigate({
+        to: "/search",
+        search: { query: query.toString() },
+      });
+
       setPreviousSearches([...previousSearches, query.toString()]);
       setInputValue("");
-      
     }
   }
 
