@@ -15,8 +15,10 @@ export function SearchBar() {
     console.log(query);
 
     if (query) {
+      // go to localhost/search?query=${query}
       setPreviousSearches([...previousSearches, query.toString()]);
-      setInputValue(""); // Clear the input after search
+      setInputValue("");
+      
     }
   }
 

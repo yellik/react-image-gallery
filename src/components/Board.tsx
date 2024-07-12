@@ -3,23 +3,26 @@ import { SearchBar } from "./SearchBar";
 import { useQuery } from "@tanstack/react-query";
 
 export function Board() {
-  const fetchPhotosSearch = async () => {
-    const response = await fetch("https://api.unsplash.com/search/photos/", {
-      headers: {
-        Authorization: "Client-ID 5990YRBZafXkBNrlIIFlKu9p5SSMERGtV09WSZbS95Q",
-        query: "balls",
-      },
-    });
+  //need to add prop for searchterm, also if no searchterm, send default get.
+  const fetchPhotosSearch = async (searchTerm:string) => {
+    const response = await fetch(
+      `https://api.unsplash.com/search/photos/?query=${searchTerm}`,
+      {
+        headers: {
+          Authorization: "Client-ID 5990YRBZafXkBNrlIIFlKu9p5SSMERGtV09WSZbS95Q",
+        },
+      }
+    );
     if (!response.ok) {
       throw new Error("Network response was not ok " + response.statusText);
     }
+    const data = await response.json();
+    return data.results;
   };
+
   const { data, error, isLoading } = useQuery({
     queryKey: ["photo"],
-    queryFn: () => fetchPhotosSearch,
-    // fetch(
-    //   "https://api.unsplash.com/photos/?client_id=iAvGTXQhJQcXFYC87pPcGTaEozxRW66U4QPGbJLTV6g"
-    // ).then((res) => res.json()),
+    queryFn: fetchPhotosSearch,
   });
 
   console.log(data);
