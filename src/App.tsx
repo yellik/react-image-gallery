@@ -1,45 +1,26 @@
 import "./App.css";
 import { Nav } from "./components/Nav";
-import { Board } from "./components/Board";
-import { Image } from "./components/Image";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Route } from "@tanstack/react-router";
-
+import { createRouter, Route, RouterProvider } from "@tanstack/react-router";
+import { routeTree } from "./routeTree.gen";
 
 const queryClient = new QueryClient();
+const router = createRouter({ routeTree });
+
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <Nav />
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/search?query=">
-            <Board />
-          </Route>
-          <Route path="/about">
-            <About/>
-          </Route>
+        <RouterProvider router={router} />
       </QueryClientProvider>
     </>
-  );
-}
-
-function Home() {
-  return (
-    <div>
-      <h2>Home</h2>
-    </div>
-  );
-}
-
-function About() {
-  return (
-    <div>
-      <h2>About</h2>
-    </div>
   );
 }
 
