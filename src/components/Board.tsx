@@ -1,26 +1,30 @@
-import { Image } from './Image';
-import { SearchBar } from './SearchBar';
-import { useQuery } from '@tanstack/react-query';
+import { Image } from "./Image";
+import { SearchBar } from "./SearchBar";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export function Board({ searchTerm }) {
+  const [page, setPage] = useState(1);
+
   const fetchPhotosSearch = async () => {
     const response = await fetch(
-      `https://api.unsplash.com/search/photos/?query=${searchTerm || 'default'}`,
+      `https://api.unsplash.com/search/photos/?query=${searchTerm || "default"}&page=${page}`,
       {
         headers: {
-          Authorization: 'Client-ID 5990YRBZafXkBNrlIIFlKu9p5SSMERGtV09WSZbS95Q',
+          Authorization:
+            "Client-ID 5990YRBZafXkBNrlIIFlKu9p5SSMERGtV09WSZbS95Q",
         },
       }
     );
     if (!response.ok) {
-      throw new Error('Network response was not ok ' + response.statusText);
+      throw new Error("Network response was not ok " + response.statusText);
     }
     const data = await response.json();
     return data.results;
   };
 
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['photo', searchTerm],
+  const { data, error, isLoading, isFetching } = useQuery({
+    queryKey: ["photo", page, searchTerm],
     queryFn: fetchPhotosSearch,
   });
 
@@ -40,6 +44,18 @@ export function Board({ searchTerm }) {
       {data.map((photo) => (
         <div key={photo.id}>
           <Image key={photo.id} photo={photo} />
+          <button
+            onClick={() => setPage((old) => Math.max(old - 1, 1))}
+            disabled={page === 1 || isFetching}
+          >
+            Previous
+          </button>
+          <button
+            onClick={() => setPage((old) => old + 1)}
+            disabled={isFetching}
+          >
+            Next
+          </button>
         </div>
       ))}
     </>
