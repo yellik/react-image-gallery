@@ -7,20 +7,20 @@ export function Board({ searchTerm }) {
   const [page, setPage] = useState(1);
 
   const fetchPhotosSearch = async () => {
-    const response = await fetch(
-      `https://api.unsplash.com/search/photos/?query=${searchTerm || "default"}&page=${page}`,
-      {
-        headers: {
-          Authorization:
-            "Client-ID 5990YRBZafXkBNrlIIFlKu9p5SSMERGtV09WSZbS95Q",
-        },
-      }
-    );
+    const url = searchTerm
+      ? `https://api.unsplash.com/search/photos/?query=${searchTerm}&page=${page}`
+      : `https://api.unsplash.com/photos/?page=${page}`;
+    const response = await fetch(url, {
+      headers: {
+        Authorization: "Client-ID 5990YRBZafXkBNrlIIFlKu9p5SSMERGtV09WSZbS95Q",
+      },
+    });
+
     if (!response.ok) {
       throw new Error("Network response was not ok " + response.statusText);
     }
     const data = await response.json();
-    return data.results;
+    return searchTerm ? data.results : data;
   };
 
   const { data, error, isLoading, isFetching } = useQuery({
@@ -44,20 +44,17 @@ export function Board({ searchTerm }) {
       {data.map((photo) => (
         <div key={photo.id}>
           <Image key={photo.id} photo={photo} />
-          <button
-            onClick={() => setPage((old) => Math.max(old - 1, 1))}
-            disabled={page === 1 || isFetching}
-          >
-            Previous
-          </button>
-          <button
-            onClick={() => setPage((old) => old + 1)}
-            disabled={isFetching}
-          >
-            Next
-          </button>
         </div>
       ))}
+      <button
+        onClick={() => setPage((old) => Math.max(old - 1, 1))}
+        disabled={page === 1 || isFetching}
+      >
+        Previous
+      </button>
+      <button onClick={() => setPage((old) => old + 1)} disabled={isFetching}>
+        Next
+      </button>
     </>
   );
 }
