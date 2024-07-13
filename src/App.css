@@ -3,7 +3,53 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  font-family: "Noto Sans", sans-serif;
 }
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #333;
+  color: white;
+}
+
+.navbar-left,
+.navbar-center,
+.navbar-right {
+  flex: 1;
+}
+
+.navbar-center {
+  text-align: center;
+}
+
+.nav-button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem; /* Increase the font size */
+  cursor: pointer;
+  padding: 1rem; /* Increase the padding */
+  transition: background 0.3s, color 0.3s;
+}
+
+.nav-button:hover {
+  background: #555;
+  color: white;
+}
+
+.navbar-left,
+.navbar-right {
+  display: flex;
+  justify-content: flex-start; /* Align Logo button to the left */
+}
+
+.navbar-right {
+  justify-content: flex-end; /* Align Github button to the right */
+}
+
 
 .logo {
   height: 6em;
@@ -22,11 +68,11 @@
 
 .flip-box {
   background-color: transparent;
-  border: 1px solid #F1F1F1;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  perspective: 1000px;
+  width: 200px;
+  height: 300px;
 }
 
-/* This container is needed to position the front and back side */
 .flip-box-inner {
   position: relative;
   width: 100%;
@@ -36,32 +82,41 @@
   transform-style: preserve-3d;
 }
 
-/* Do a horizontal flip when you move the mouse over the flip box container */
 .flip-box:hover .flip-box-inner {
   transform: rotateY(180deg);
 }
 
-/* Position the front and back side */
 .flip-box-front,
 .flip-box-back {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari */
+  width: 200px;
+  height: 300px;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
-/* Style the front side (fallback if image is missing) */
 .flip-box-front {
   background-color: #bbb;
   color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Style the back side */
 .flip-box-back {
   background-color: dodgerblue;
   color: white;
   transform: rotateY(180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.flip-box-front img {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
 }
 
 @keyframes logo-spin {
@@ -96,19 +151,12 @@
 }
 
 .photo-item {
-  border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.3s;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.photo-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .photo-item:hover {
