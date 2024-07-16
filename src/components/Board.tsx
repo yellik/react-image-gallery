@@ -6,6 +6,7 @@ import { useState } from "react";
 export function Board({ searchTerm }) {
   const [page, setPage] = useState(1);
 
+
   const fetchPhotosSearch = async () => {
     const url = searchTerm
       ? `https://api.unsplash.com/search/photos/?query=${searchTerm}&page=${page}`
@@ -36,6 +37,7 @@ export function Board({ searchTerm }) {
   if (error) {
     return <h1>error!</h1>;
   }
+
 
   return (
     <>
